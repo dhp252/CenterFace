@@ -48,13 +48,10 @@ class CenterFace(object):
     def inference_opencv(self, img, threshold):
         blob = cv2.dnn.blobFromImage(img, scalefactor=1.0, size=(self.img_w_new, self.img_h_new), mean=(0, 0, 0), swapRB=True, crop=False)
         self.net.setInput(blob)
-        begin = datetime.datetime.now()
         if self.landmarks:
             heatmap, scale, offset, lms = self.net.forward(["537", "538", "539", '540'])
         else:
             heatmap, scale, offset = self.net.forward(["535", "536", "537"])
-        end = datetime.datetime.now()
-        print("cpu times = ", end - begin)
         return self.postprocess(heatmap, lms, offset, scale, threshold)
 
     def transform(self, h, w):

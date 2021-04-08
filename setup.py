@@ -13,11 +13,10 @@ if __name__=='__main__':
     REQUIREMENTS_PATH = 'requirements.txt'
 
 
-    # import pdb; pdb.set_trace()
     setup(
         name                          = 'centerface',
         version                       = '0.1.0',
         python_requires               = PYTHON_REQUIRES,
-        packages                      = find_namespace_packages(include=[f'{PKG_DIR}.*']), #, exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
+        packages                      = find_namespace_packages(include=[f'{PKG_DIR}']), #, exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
         install_requires              = ['opencv-python','numpy'],
     )
