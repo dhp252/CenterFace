@@ -1,92 +1,42 @@
-# a forked & modified version of https://github.com/Star-Clouds/CenterFace that fit in `dhp` project
+# A forked & modified version of https://github.com/Star-Clouds/CenterFace that fit in `dhp` project
 
-## CenterFace
+## INSTALL
 
-### Introduce 
+```bash
+python -m pip install .
+```
 
-CenterFace(size of 7.3MB) is a practical anchor-free face detection and alignment method for edge devices.
+## Example
+```python
+from centerface import CenterFace
 
- ![image](results/bl4.jpg)   
+cap = cv2.VideoCapture(0)
+ret, frame = cap.read()
+h, w = frame.shape[:2]
+centerface = CenterFace(landmarks=True) # default
+while True:
+    ret, frame = cap.read()
+    # dets, lms = centerface(frame, h, w, threshold=0.35) # centerface orignal
+    dets, lms = centerface(frame, threshold=0.35) # modified
+    for det in dets:
+        boxes, score = det[:4], det[4]
+        cv2.rectangle(frame, (int(boxes[0]), int(boxes[1])), (int(boxes[2]), int(boxes[3])), (2, 255, 0), 1)
+    for lm in lms:
+        for i in range(0, 5):
+            cv2.circle(frame, (int(lm[i * 2]), int(lm[i * 2 + 1])), 2, (0, 0, 255), -1)
+    cv2.imshow('out', frame)
+    # Press Q on keyboard to stop recording
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+cap.release()
+```
 
-### Recent Update
-- `2019.09.13` CenterFace is released.
-
-### Environment
-
-- OpenCV 4.1.0
-- Numpy
-- Python3.6+
-
-### Accuracy
-
-- Results on val set of WIDER FACE:
-
-Model Version|Easy Set|Medium Set|Hard Set
-------|--------|----------|--------
-FaceBoxes|0.840 |0.766 |0.395
-FaceBoxes3.2×|0.798|0.802|0.715
-RetinaFace-mnet|0.896|0.871|0.681
-LFFD-v1|0.910|0.881|0.780
-LFFD-v2|0.837|0.835|0.729
-CenterFace|0.935|0.924|0.875
-CenterFace-small|0.931|0.924|0.870
-
-- Results on test set of WIDER FACE:
-
-Model Version|Easy Set|Medium Set|Hard Set
-------|--------|----------|--------
-FaceBoxes|0.839 |0.763 |0.396
-FaceBoxes3.2×|0.791|0.794|0.715
-RetinaFace-mnet|0.896|0.871|0.681
-LFFD-v1|0.910|0.881|0.780
-LFFD-v2|0.837|0.835|0.729
-CenterFace|0.932|0.921|0.873
-
-> - **RetinaFace-mnet** is short for RetinaFace-MobileNet-0.25 from excellent work [insightface](https://github.com/deepinsight/insightface).
-> - **LFFD-v1** is from prefect work [LFFD](https://github.com/YonghaoHe/A-Light-and-Fast-Face-Detector-for-Edge-Devices).
-> - CenterFace/CenterFace-small evaluation is under MULTI-SCALE, FLIP. 
-> - For SIO(Single Inference on the Original) evaluation schema, CenterFace also produces 92.2% (Easy), 91.1% (Medium) and 78.2% (Hard) for validation set.
-
-- Results on FDDB:
-
-Model Version|Disc ROC curves score
-------|--------
-RetinaFace-mnet|96.0@1000
-LFFD-v1|97.3@1000
-LFFD-v2|97.2@1000
-CenterFace|97.9@1000
-CenterFace-small|98.1@1000
-
-### Inference Latency
-
-- Latency on NVIDIA RTX 2080TI:
-
-Resolution->|640×480|1280×720(704)|1920×1080(1056)
-------------|-------|--------|---------
-RetinaFace-mnet|5.40ms|6.31ms|10.26ms
-LFFD-v1|7.24ms|14.58ms|28.36ms
-CenterFace|5.5ms|6.4ms|8.7ms
-CenterFace-small|4.4ms|5.7ms|7.3ms
-
-#### Results: Face as Point
-   
- ![image](results/box_lm.jpg)  
- 
- ![image](results/bl3.jpg)    
- 
- ![image](results/bl1.jpg)    
-
-
-### Discussion
-
-  Welcome to join in **QQ Group(229042802)** for more discussion, including but not limited to face detection, face anti-spoofing and so on.
-
-### Author
+## Author
  - [ywlife](https://github.com/ywlife)
  - [SyGoing](https://github.com/SyGoing)
  - [MirrorYuChen](https://github.com/MirrorYuChen)
 
-###  Citation
+##  Citation
 If you benefit from our work in your research and product, please consider to cite the following related papers:
 ```
 @inproceedings{CenterFace,
