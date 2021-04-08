@@ -10,8 +10,6 @@ if __name__=='__main__':
 
     PKG_DIR = 'centerface'
     PYTHON_REQUIRES = '>=3.6'
-    REQUIREMENTS_PATH = 'requirements.txt'
-
 
     setup(
         name                 = 'centerface',
@@ -20,7 +18,7 @@ if __name__=='__main__':
         packages             = find_namespace_packages(include=[f'{PKG_DIR}']), #, exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
         install_requires     = ['opencv-python','numpy'],
         include_package_data = True,
-        package_data={
-            "centerface": ["*.onnx"],
+        package_data         = {
+            "centerface" : ["*.onnx"],
         }
     )
