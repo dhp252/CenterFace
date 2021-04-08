@@ -12,7 +12,9 @@ class CenterFace(object):
             self.net = cv2.dnn.readNetFromONNX('../models/onnx/cface.1k.onnx')
         self.img_h_new, self.img_w_new, self.scale_h, self.scale_w = 0, 0, 0, 0
 
-    def __call__(self, img, height, width, threshold=0.5):
+    def __call__(self, img, height=None, width=None, threshold=0.5):
+        if height is None and width is None:
+            height, width = img.shape[:2]
         self.img_h_new, self.img_w_new, self.scale_h, self.scale_w = self.transform(height, width)
         return self.inference_opencv(img, threshold)
 
