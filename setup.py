@@ -14,9 +14,13 @@ if __name__=='__main__':
 
 
     setup(
-        name                          = 'centerface',
-        version                       = '0.1.0',
-        python_requires               = PYTHON_REQUIRES,
-        packages                      = find_namespace_packages(include=[f'{PKG_DIR}']), #, exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
-        install_requires              = ['opencv-python','numpy'],
+        name                 = 'centerface',
+        version              = '0.1.0',
+        python_requires      = PYTHON_REQUIRES,
+        packages             = find_namespace_packages(include=[f'{PKG_DIR}']), #, exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
+        install_requires     = ['opencv-python','numpy'],
+        include_package_data = True,
+        package_data={
+            "centerface": ["*.onnx"],
+        }
     )
