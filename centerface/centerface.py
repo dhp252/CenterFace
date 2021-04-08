@@ -1,9 +1,13 @@
 import numpy as np
 import cv2
 import datetime
+from pathlib import Path
 
 
 class CenterFace(object):
+
+    W_PATH = str((Path(__file__) / '../centerface.onnx').resolve())
+
     def __init__(self, landmarks=True):
         """
         Example:
@@ -30,7 +34,7 @@ class CenterFace(object):
         """
         self.landmarks = landmarks
         if self.landmarks:
-            self.net = cv2.dnn.readNetFromONNX('./centerface.onnx')
+            self.net = cv2.dnn.readNetFromONNX(CenterFace.W_PATH)
         else:
             self.net = cv2.dnn.readNetFromONNX('../models/onnx/cface.1k.onnx')
         self.img_h_new, self.img_w_new, self.scale_h, self.scale_w = 0, 0, 0, 0
