@@ -45,7 +45,7 @@ def detect_face_centerface(image, threshold=0.35):
     For simple installation, follow https://github.com/dhp252/CenterFace
     instruction.
     !NOTICE: This function should not be used in real application or for speed
-    benchmark because the `centerface` instance will be initilaize every call.
+    benchmark because the `centerface` instance will be initialize every call.
 
     Example:
     >>> lena = cv2.imread('...')
