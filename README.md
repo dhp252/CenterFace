@@ -16,8 +16,7 @@ h, w = frame.shape[:2]
 centerface = CenterFace(landmarks=True) # default
 while True:
     ret, frame = cap.read()
-    # dets, lms = centerface(frame, h, w, threshold=0.35) # centerface orignal
-    dets, lms = centerface(frame, threshold=0.35) # modified
+    dets, lms = centerface(frame, h, w, threshold=0.35)
     for det in dets:
         boxes, score = det[:4], det[4]
         cv2.rectangle(frame, (int(boxes[0]), int(boxes[1])), (int(boxes[2]), int(boxes[3])), (2, 255, 0), 1)
